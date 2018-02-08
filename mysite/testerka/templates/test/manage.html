@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<div style="min-height: 2em">
+    <h4 style="position: absolute">Nazwa testu: {{test.name}}</h4>
+</div>
+<div>
+<h4>Użytkownicy:</h4>
+<table class="table table-bordered">
+<thead>
+    <th>#</th>
+    <th>Treść</th>
+</thead>
+<tbody>
+{% for userTest in userTests %}
+<tr>
+    <td colspan="2">Użytkownik: {{userTest.user}}</td>
+</tr>
+    {% for question in userTest.questions %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{question.answer}}</td>
+</tr>
+    {% endfor %}
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

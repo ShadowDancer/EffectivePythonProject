@@ -1,0 +1,53 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<h3>
+    Dostępne testy:
+</h3>
+<table class="table table-hover"> <thead>
+    <tr>
+      <th>#</th>  
+      <th>Test</th>
+      <th>Start</th>
+      <th>Koniec</th>
+      <th>Stan</th>
+      {% if request.user.is_superuser %}
+      <th>Administruj</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+{% if tests %}
+    {% for test in tests %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ test.name }}</td>
+        <td>{{ test.dateStart |date:'Y-m-d H:i'}}</td>
+        <td>{{ test.dateEnd |date:'Y-m-d H:i'}}</td>
+
+        <td>
+        {% if test.available %}
+            <a href="/tests/{{test.id}}/questions/{{test.currentQuestion}}">W trakcie {{'>>>'}}</a>
+        {% endif %}
+        {% if test.finished %}
+            Zakończony
+        {% endif %}
+        {% if test.awaiting %}
+            Oczekuje na start
+        {% endif %}
+        {% if test.expired %}
+            Zakończony
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <th><a href="/tests/{{test.id}}/manage">Zarządzaj</a></th>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <p>Brak testów do wyświetlenia.</p>
+{% endif %}
+</tbody>
+</table>
+
+{% endblock %}

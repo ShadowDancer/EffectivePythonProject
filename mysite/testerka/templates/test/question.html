@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div style="min-height: 1em">
+        <h4 style="position: absolute">{{test.name}}</h4>
+        <h5 style="float:right">Pozostało: {{test.timeLeft}}</h5>
+</div>
+
+<h1 style="margin-top: 1em">
+        {{ question.name }}:
+        </h1>
+<div class="form-group">
+<form id="myform" action="/tests/{{test.id}}/questions/{{question.id}}/submit" method="post">
+    {% csrf_token %}
+
+        <textarea class="form-control" rows="5" id="question" readonly>{{question.questionText}}</textarea>
+        <label for="tests">Testy:</label>
+        <textarea class="form-control" rows="5" id="tests" readonly>{{question.testsText}}</textarea>
+        <label for="response">Odpowiedź:</label>
+        <textarea name="answer" class="form-control" rows="5" id="answer"></textarea>
+    <button style="float:right; padding-left:5em; padding-right:5em" class="btn btn-default btn-primary" type="submit">Wyślij</button>
+</form>
+</div>
+    
+{% endblock %}
