@@ -16,6 +16,9 @@
             <ul class="nav navbar-nav">
                 {% if user.is_authenticated %}
                 <li><a href="/">Zalogowany jako: {{ user.get_username }}</a></li>
+                {% if request.user.is_superuser %}
+                <li><a href="/admin">Administracja</a></li>
+                {% endif %}     
                 <li><a href="{% url 'logout'%}?next={{request.path}}">Wyloguj</a></li>   
             {% else %}
                 <li><a href="{% url 'login'%}?next={{request.path}}">Zaloguj</a></li>   
