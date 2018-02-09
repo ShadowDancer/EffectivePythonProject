@@ -1,4 +1,6 @@
+"""Imports subviews is somebody imports biews module"""
+
 from .index import index
-from .testQuestion import testQuestion
-from .submitQuestion import submitQuestion
-from .manageTest import manageTest
+from .test_question import test_question
+from .submit_question import submit_question
+from .manage_test import manage_test

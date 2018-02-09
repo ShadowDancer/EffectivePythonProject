@@ -1,7 +1,4 @@
-from django.contrib import admin
-
-# Register your models here.
-
+"""Configure models to be displayed in admin site"""
 from django.contrib import admin
 from .models import TestQuestion, TestSuite
 
