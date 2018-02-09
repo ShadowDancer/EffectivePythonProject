@@ -1,6 +1,7 @@
 """Helper functions for views servicing request for single question"""
 from datetime import datetime
 
+from django.http import HttpResponse
 from django.shortcuts import redirect
 
 from .view_test_helper import test_forbiden, test_not_found, test_finished
@@ -20,8 +21,8 @@ def load_test(request, test_id):
 def load_user_test(request, test_id):
     """Loads user test by given test id checking if user can access this test
     returns UserTest or HttpResponse on error"""
-    test = load_test(request, test_id)
-    if test is not TestSuite:
+    test = load_test(request, test_id)    
+    if test is HttpResponse:
         return test
 
     # check if test is not expired
@@ -31,16 +32,17 @@ def load_user_test(request, test_id):
 
     user_test_query = UserTestSuite.objects.filter(testSuite=test, user=request.user)
     user_test = None
-    if user_test_query:
+    if len(user_test_query) == 1:
         user_test = user_test_query[0]
+        print(user_test)
+        if user_test.finished:
+            return test_finished(request)
     else:
         # nie ma informacji o teście dla użytkownika, tworzymy
         user_test = UserTestSuite()
         user_test.testSuite = test
         user_test.user = request.user
         user_test.save()
-    if user_test.finished:
-        return test_finished(request)
     return user_test
 
 def validate_question(request, test_id, user_test, question_id):
@@ -50,9 +52,9 @@ def validate_question(request, test_id, user_test, question_id):
         # attempt to view invalid question
         return redirect(f'/tests/{test_id}/questions/{user_test.currentQuestion}')
 
-    # wczytaj pytania
     questions = TestQuestion.objects.filter(testSuite=user_test.testSuite)
     if question_id - 1 >= len(questions):
+        print(question_id, len(questions))
         return test_not_found(request)
 
-    return questions[question_id - 1]
+    return questions[question_id - 1], len(questions)

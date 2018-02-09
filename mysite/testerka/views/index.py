@@ -32,7 +32,7 @@ def _get_tests(user):
         test.finished = False
         test.currentQuestion = 1
         for user_test in user_tests:
-            if user_test.id == test.id:
+            if user_test.testSuite.id == test.id:
                 if user_test.finished:
                     test.finished = True
                 test.currentQuestion = user_test.currentQuestion

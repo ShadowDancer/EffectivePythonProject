@@ -29,14 +29,11 @@
         {% if test.available %}
             <a href="/tests/{{test.id}}/questions/{{test.currentQuestion}}">W trakcie {{'>>>'}}</a>
         {% endif %}
-        {% if test.finished %}
+        {% if test.finished or test.expired%}
             Zakończony
         {% endif %}
         {% if test.awaiting %}
             Oczekuje na start
-        {% endif %}
-        {% if test.expired %}
-            Zakończony
         {% endif %}
         {% if request.user.is_superuser %}
         <th><a href="/tests/{{test.id}}/manage">Zarządzaj</a></th>

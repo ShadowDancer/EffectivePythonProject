@@ -15,7 +15,7 @@ def manage_test(request, test_id):
     """Displays all answers for test submitted by users"""
 
     test = load_test(request, test_id)
-    if test is not UserTestSuite:
+    if test is HttpResponse:
         return test
 
     user_test_suites = UserTestSuite.objects.filter(testSuite=test)

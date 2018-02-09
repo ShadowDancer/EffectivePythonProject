@@ -28,7 +28,7 @@ class TestQuestion(models.Model):
         max_length=200, verbose_name="Nazwa", default="Nazwa pytania")
     questionText = models.TextField(
         verbose_name="Pytanie", default="Treść pytania")
-    testsText = models.TextField(verbose_name="Testy", default="")
+    testsText = models.TextField(verbose_name="Testy", default="", blank=True)
     testSuite = models.ForeignKey(TestSuite, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -51,9 +51,3 @@ class UserTestQuestion(models.Model):
     userTestSuite = models.ForeignKey(UserTestSuite, on_delete=models.CASCADE)
     testQuestion = models.ForeignKey(TestQuestion, on_delete=models.CASCADE)
     answer = models.TextField(default="")
-
-
-TestSuite.objects = models.Manager()
-TestQuestion.objects = models.Manager()
-UserTestSuite.objects = models.Manager()
-UserTestQuestion.objects = models.Manager()
